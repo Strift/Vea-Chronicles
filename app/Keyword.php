@@ -11,6 +11,6 @@ class Keyword extends Model
     ];
 
     protected $visible = [
-    	'word', 'description'
+    	'id', 'word', 'description'
     ];
 }

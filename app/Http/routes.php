@@ -15,8 +15,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Back-office
+
 Route::get('/keywords', 'BackOfficeController@keywords');
 
-Route::resource('api/keywords', 'KeywordController', ['only' => [
-    'index', 'store', 'show', 'update', 'destroy'
-]]);
+// API
+
+Route::group(['prefix' => 'api'], function() {
+	Route::resource('keywords', 'KeywordController', ['only' => [
+	    'index', 'store', 'show', 'update', 'destroy'
+	]]);
+});

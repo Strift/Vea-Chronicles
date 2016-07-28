@@ -30,7 +30,7 @@
                             <input v-model="keyword.word" type="text" name="word" placeholder="Mot clé" class="form-control">
                         </div>
                         <div class="form-group">
-                            <textarea v-model="keyword.description" class="form-control" rows="2"></textarea>
+                            <textarea v-model="keyword.description" class="form-control" rows="2" placeholder="Description"></textarea>
                         </div>
                     </div> 
                     <button v-on:click.prevent="store()" type="submit" class="btn btn-sm btn-success pull-right col-xs-2">Créer</button>

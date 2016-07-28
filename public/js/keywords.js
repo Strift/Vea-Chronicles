@@ -1,6 +1,6 @@
 Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#token').getAttribute("value");
 
-new Vue({
+vm = new Vue({
 
 	el: '#keywords',
 
@@ -50,6 +50,7 @@ new Vue({
 		},
 
 		destroy: function(item) {
+			console.log("Id:" + item.id)
 			this.$http.delete('/api/keywords/' + item.id).then(function(response) {
 				if (response.status == 200) {
 					index = this.keywords.indexOf(item);
