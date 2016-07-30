@@ -17,3 +17,10 @@ $factory->define(App\Keyword::class, function (Faker\Generator $faker) {
         'description' => $faker->sentence,
     ];
 });
+
+$factory->define(App\Text::class, function (Faker\Generator $faker) {
+	return [
+		'title' => $faker->sentence,
+		'content' => $faker->text,
+	];
+});
