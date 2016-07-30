@@ -69,7 +69,7 @@ return [
         'testing' => [
             'driver'    => 'mysql',
             'host'      => env('DB_TEST_HOST', 'localhost'),
-            'database'  => env('DB_TEST_DATABASE', 'vea_chronicles'),
+            'database'  => env('DB_TEST_DATABASE', 'vea_chronicles_test'),
             'username'  => env('DB_TEST_USERNAME', 'root'),
             'password'  => env('DB_TEST_PASSWORD', ''),
             'charset'   => 'utf8',

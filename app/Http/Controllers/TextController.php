@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
-class KeywordController extends Controller
+class TextController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +17,8 @@ class KeywordController extends Controller
     {
         try
         {
-            $keywords = \App\Keyword::orderBy('word', 'asc')->get();
-            return $keywords->toJson();
+            $texts = \App\Text::all();
+            return $texts->toJson();
         }
         catch (Exception $e)
         {
@@ -36,7 +36,7 @@ class KeywordController extends Controller
     {
         try
         {
-            return \App\Keyword::create($request->all());
+            return \App\Text::create($request->all());
         }
         catch (Exception $e)
         {
@@ -54,10 +54,10 @@ class KeywordController extends Controller
     {
         try
         {
-            $word = \App\Keyword::find($id);
-            if (!is_null($word))
+            $text = \App\Text::find($id);
+            if (!is_null($text))
             {
-                return $word->toJson();
+                return $text->toJson();
             }
         }
         catch (Exception $e)
@@ -77,10 +77,10 @@ class KeywordController extends Controller
     {
         try
         {
-            $keyword = \App\Keyword::find($id);
-            $keyword->description = $request->description;
-            $keyword->save();
-            return $keyword->toJson();
+           $text = \App\Text::find($id);
+           $text->content = $request->content;
+           $text->save();
+            return$text->toJson();
         } 
         catch(Exception $e) 
         {
@@ -98,7 +98,7 @@ class KeywordController extends Controller
     {
         try
         {
-            \App\Keyword::destroy($id);
+            \App\Text::destroy($id);
             return response()->json("{}", 200);
         }
         catch(Exception $e) 

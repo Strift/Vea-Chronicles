@@ -50,7 +50,6 @@ vm = new Vue({
 		},
 
 		destroy: function(item) {
-			console.log("Id:" + item.id)
 			this.$http.delete('/api/keywords/' + item.id).then(function(response) {
 				if (response.status == 200) {
 					index = this.keywords.indexOf(item);
