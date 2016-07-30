@@ -26,6 +26,7 @@ class KeywordAPITest extends TestCase
 			->seeJson([
 				"word" => "TheKeyword", "description" => "The Description"
 				]);
+		$this->seeInDatabase('keywords', ["word" => "TheKeyword", "description" => "The Description"]);
 	}
 
     public function testShow()
@@ -39,11 +40,12 @@ class KeywordAPITest extends TestCase
 
     public function testUpdate()
     {
-    	$keyword = factory(App\Keyword::class)->create([]);
-    	$this->put('api/keywords/' . $keyword->id, ["description" => "test"])
+    	$keyword = factory(App\Keyword::class)->create(["word" => "TheKeyword"]);
+    	$this->put('api/keywords/' . $keyword->id, ["description" => "The Description"])
     		->seeJsonStructure([
     			"word", "description", "id"
     			]);
+		$this->seeInDatabase('keywords', ["word" => "TheKeyword", "description" => "The Description"]);
     }
 
     public function testDestroy()
