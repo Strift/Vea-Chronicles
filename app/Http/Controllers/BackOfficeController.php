@@ -12,4 +12,9 @@ class BackOfficeController extends Controller
     {
     	return view('keywords');
     }
+
+    public function texts()
+    {
+    	return view('texts');
+    }
 }
