@@ -18,7 +18,7 @@ class KeywordController extends Controller
         try
         {
             $keywords = \App\Keyword::orderBy('word', 'asc')->get();
-            return $keywords;
+            return $keywords->toJson();
         }
         catch (Exception $e)
         {
@@ -54,7 +54,11 @@ class KeywordController extends Controller
     {
         try
         {
-            return \App\Keyword::find($id);
+            $word = \App\Keyword::find($id);
+            if (!is_null($word))
+            {
+                return $word->toJson();
+            }
         }
         catch (Exception $e)
         {
