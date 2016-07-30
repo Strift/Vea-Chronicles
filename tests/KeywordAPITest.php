@@ -45,5 +45,12 @@ class KeywordAPITest extends TestCase
     			"word", "description", "id"
     			]);
     }
+
+    public function testDestroy()
+    {
+    	$keyword = factory(App\Keyword::class)->create([]);
+    	$this->delete('api/keywords/' . $keyword->id);
+    	$this->assertEquals(null, App\Keyword::find($keyword->id));
+    }
     
 }
