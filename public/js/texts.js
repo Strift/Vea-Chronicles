@@ -1,17 +1,21 @@
 Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#token').getAttribute("value");
 
-vm = new Vue({
+var MyComponent = Vue.extend({
 
-	el: '#texts',
+	el: function() {
+		return '#texts';
+	},
 
-	data: {
-		texts: [],
-		error: false,
-		updated: false,
-		text: {
-			title: '',
-			content: ''
-		}
+	data: function() {
+		return {
+			texts: [],
+			error: false,
+			updated: false,
+			text: {
+				title: '',
+				content: ''
+			}
+		};
 	},
 
 	ready: function() {
@@ -38,6 +42,8 @@ vm = new Vue({
 						content: ''
 					};
 				}
+			}, function(response) {
+				console.log("dafuq");
 			});
 		},
 
@@ -59,3 +65,5 @@ vm = new Vue({
 		}
 	}
 });
+
+var app = new MyComponent();

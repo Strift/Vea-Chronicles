@@ -26,20 +26,18 @@
             </div>               
         </form>
 
-        <form role="form" class="row">
-            <div v-for="item in texts" transition="expand" class="form-group">
-                <div class="row">
-                    <div class="col-xs-10">
-                        <label for="content">@{{ item.title }}</label>
-                        <textarea v-model="item.content" class="form-control" rows="2" id="content"></textarea>
-                    </div>
-                    <div class="col-xs-2">
-                        <button v-on:click.prevent="update(item)" type="submit" class="btn btn-xs btn-default ">Enregistrer</button>
+        <div class="row">
+            <div v-for="item in texts" transition="expand" class="panel panel-default">
+                <div class="panel-heading">
+                    @{{ item.title }}
+                    <div class="pull-right">
+                        {{-- <a href="{{ action('BackOfficeController@editText') }}">Modifier</a> --}}
                         <button v-on:click.prevent="destroy(item)" type="submit" class="btn btn-xs btn-danger ">Supprimer</button>
                     </div>
                 </div>
+                <div class="panel-body">@{{ item.preview }}</div>
             </div>
-        </form>
+        </div>
     </div>
 @endsection
 
