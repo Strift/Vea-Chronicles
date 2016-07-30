@@ -13,7 +13,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        \App\Text::saving(function ($text) {
+            $text->preview = substr($text->content, 0, 200) . "...";
+        });
     }
 
     /**

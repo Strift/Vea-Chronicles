@@ -15,7 +15,7 @@ class TextAPITest extends TestCase
 		$this->get('api/texts/')
 			->seeJsonStructure([
 				"*" => [
-				"title", "content", "id"
+				"title", "preview", "id"
 				]
 			]);
 	}

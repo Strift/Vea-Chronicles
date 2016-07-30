@@ -8,5 +8,5 @@ class Text extends Model
 {
     protected $fillable = ["title", "content"];
 
-    protected $visible = ["title", "content", "id"];
+    protected $visible = ["title", "content", "preview", "id"];
 }

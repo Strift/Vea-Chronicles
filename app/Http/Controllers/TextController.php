@@ -18,7 +18,7 @@ class TextController extends Controller
         try
         {
             $texts = \App\Text::all();
-            return $texts->toJson();
+            return $texts->except(['content'])->toJson();
         }
         catch (Exception $e)
         {
@@ -77,9 +77,9 @@ class TextController extends Controller
     {
         try
         {
-           $text = \App\Text::find($id);
-           $text->content = $request->content;
-           $text->save();
+            $text = \App\Text::find($id);
+            $text->content = $request->content;
+            $text->save();
             return$text->toJson();
         } 
         catch(Exception $e) 
