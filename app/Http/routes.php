@@ -24,11 +24,11 @@ Route::get('texts', 'BackOfficeController@texts');
 
 Route::group(['prefix' => 'api'], function() {
 	
-	Route::resource('keywords', 'KeywordController', ['only' => [
-	    'index', 'store', 'show', 'update', 'destroy'
+	Route::resource('keywords', 'KeywordController', ['except' => [
+	    'create', 'edit'
 	]]);
 
-	Route::resource('texts', 'TextController', ['only' => [
-	    'index', 'store', 'show', 'update', 'destroy'
+	Route::resource('texts', 'TextController', ['except' => [
+	    'create', 'edit'
 	]]);
 });
