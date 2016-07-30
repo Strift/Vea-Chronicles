@@ -9,6 +9,17 @@ class KeywordAPITest extends TestCase
 
 	use DatabaseMigrations;
 
+	public function testIndex()
+	{
+		factory(App\Keyword::class, 2)->create([]);
+		$this->get('api/keywords/')
+			->seeJsonStructure([
+				"*" => [
+				"word", "description", "id"
+				]
+			]);
+	}
+
     public function testShow()
     {
     	$keyword = factory(App\Keyword::class)->create([]);
