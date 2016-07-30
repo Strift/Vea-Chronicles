@@ -20,6 +20,14 @@ class KeywordAPITest extends TestCase
 			]);
 	}
 
+	public function testStore()
+	{
+		$this->post('api/keywords', ["word" => "TheKeyword", "description" => "The Description"])
+			->seeJson([
+				"word" => "TheKeyword", "description" => "The Description"
+				]);
+	}
+
     public function testShow()
     {
     	$keyword = factory(App\Keyword::class)->create([]);
