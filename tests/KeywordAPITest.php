@@ -36,5 +36,14 @@ class KeywordAPITest extends TestCase
     			"word", "description", "id"
     			]);
     }
+
+    public function testUpdate()
+    {
+    	$keyword = factory(App\Keyword::class)->create([]);
+    	$this->put('api/keywords/' . $keyword->id, ["description" => "test"])
+    		->seeJsonStructure([
+    			"word", "description", "id"
+    			]);
+    }
     
 }

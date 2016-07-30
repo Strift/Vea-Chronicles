@@ -80,7 +80,7 @@ class KeywordController extends Controller
             $keyword = \App\Keyword::find($id);
             $keyword->description = $request->description;
             $keyword->save();
-            return response()->json("{}", 200);
+            return $keyword->toJson();
         } 
         catch(Exception $e) 
         {
