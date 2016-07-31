@@ -41,9 +41,9 @@ class TextAPITest extends TestCase
     public function testUpdate()
     {
         $text = factory(App\Text::class)->create(["title" => "TheTitle"]);
-        $this->put('api/texts/' . $text->id, ["content" => "The content"])
+        $this->put('api/texts/' . $text->id, ["title" => "TheTitle", "content" => "The content"])
             ->seeJsonStructure([
-                "title", "content", "id"
+                "id", "title", "content", "keywords"
                 ]);
         $this->seeInDatabase('texts', ["title" => "TheTitle", "content" => "The content"]);
     }

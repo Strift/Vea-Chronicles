@@ -86,11 +86,11 @@ class TextController extends Controller
                 "title" => 'required|unique:texts,title,'.$id.',id|max:255',
                 "content" => 'required',
                 ]);
-            $text = \App\Text::find($id);
+            $text = \App\Text::with('keywords')->find($id);
             if (!is_null($text))
             {
                 $text->update($request->all());
-                return$text->toJson();
+                return $text->toJson();
             }
             return response()->json("{}", 500);
         } 
