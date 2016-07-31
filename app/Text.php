@@ -12,5 +12,6 @@ class Text extends Model
 
     public function keywords()
     {
+    	return $this->belongsToMany(Keyword::class);
     }
 }
