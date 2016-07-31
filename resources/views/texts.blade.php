@@ -12,7 +12,7 @@
             <h3>Textes</h3>
         </div>
 
-        <form role="form" class="row">
+        <form v-if="!editing" transition="expand" role="form" class="row">
             <div class="row">
                 <div class="col-xs-10">
                     <div class="form-group">
@@ -32,7 +32,10 @@
             <div v-for="item in texts" transition="expand" class="panel panel-default">
 
                 <div class="panel-heading">
-                    <input v-if="isEditing(item)" v-model="item.title" type="text" class="form-control"/>
+                    <div v-if="isEditing(item)">
+                        <input v-model="item.title" type="text" class="form-control"/>
+                        <span class="validation-error">@{{ validationErrors.title }}</span>
+                    </div>
                     <div v-else>
                         @{{ item.title }}
                         <div class="pull-right">
@@ -46,6 +49,7 @@
                         <div class="form-group">
                             <textarea v-model="item.content" class="form-control"></textarea>
                         </div>
+                        <span class="validation-error">@{{ validationErrors.content }}</span>
                         <button v-on:click.prevent="update(item)" type="submit" class="btn btn-xs btn-primary pull-right">Enregistrer</button>
                     </div>
                     <div v-else>

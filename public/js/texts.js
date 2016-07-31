@@ -26,6 +26,12 @@ var MyComponent = Vue.extend({
 		};
 	},
 
+	computed: {
+		editing: function() {
+			return (this.editedId !== null);
+		}
+	},
+
 	ready: function() {
 		this.fetchTexts();
 	},
@@ -54,7 +60,7 @@ var MyComponent = Vue.extend({
 					content = response.json();
 					this.validationErrors.title = content.title;
 					this.validationErrors.content = content.content;
-				}	
+				}
 			});
 		},
 
@@ -65,12 +71,19 @@ var MyComponent = Vue.extend({
 		},
 
 		update: function(item) {
-			this.editedId = null;
 			this.$http.put('/api/texts/' + item.id, item).then(function(response) {
-				// sucess
+				this.editedId = null;
+				this.validationErrors = {title: '', content: ''};
 			}, function(response) {
-				item.title = this.textBeforeEdit.title;
-				item.content = this.textBeforeEdit.content;
+				if (response.status == 422) {
+					content = response.json();
+					this.validationErrors.title = content.title;
+					this.validationErrors.content = content.content;
+				} else {
+					item.title = this.textBeforeEdit.title;
+					item.content = this.textBeforeEdit.content;
+					this.editedId = null;
+				}
 			});
 		},
 

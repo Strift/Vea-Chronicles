@@ -83,7 +83,7 @@ class TextController extends Controller
         try
         {
             $this->validate($request, [
-                "title" => 'required|unique:texts|max:255',
+                "title" => 'required|unique:texts,title,'.$id.',id|max:255',
                 "content" => 'required',
                 ]);
             $text = \App\Text::find($id);
