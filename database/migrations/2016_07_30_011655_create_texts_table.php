@@ -16,7 +16,6 @@ class CreateTextsTable extends Migration
             $table->increments('id');
             $table->text('title');
             $table->text('content');
-            $table->text('preview');
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-xs-10">
                     <div class="form-group">
-                        <input v-model="text.title" type="text" name="title" placeholder="Titre" class="form-control">
+                        <input v-model="text.title" type="text" placeholder="Titre" class="form-control"/>
                     </div>
                     <div class="form-group">
                         <textarea v-model="text.content" class="form-control" rows="2" placeholder="Contenu"></textarea>
@@ -28,14 +28,29 @@
 
         <div class="row">
             <div v-for="item in texts" transition="expand" class="panel panel-default">
+
                 <div class="panel-heading">
-                    @{{ item.title }}
-                    <div class="pull-right">
-                        <a href="texts/edit/@{{item.id}}">Modifier</a>
-                        <button v-on:click.prevent="destroy(item)" type="submit" class="btn btn-xs btn-danger ">Supprimer</button>
+                    <input v-if="isEditing(item)" v-model="item.title" type="text" class="form-control"/>
+                    <div v-else>
+                        @{{ item.title }}
+                        <div class="pull-right">
+                            <button v-on:click.prevent="edit(item)" type="submit" class="btn btn-xs btn-default">Modifier</button>
+                            <button v-on:click.prevent="destroy(item)" type="submit" class="btn btn-xs btn-danger ">Supprimer</button>
+                        </div>
                     </div>
                 </div>
-                <div class="panel-body">@{{ item.preview }}</div>
+                <div class="panel-body">
+                    <div v-if="isEditing(item)">
+                        <div class="form-group">
+                            <textarea v-model="item.content" class="form-control"></textarea>
+                        </div>
+                        <button v-on:click.prevent="update(item)" type="submit" class="btn btn-xs btn-primary pull-right">Enregistrer</button>
+                    </div>
+                    <div v-else>
+                        @{{ item.content.substring(0, 200) }}...
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>

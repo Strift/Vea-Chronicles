@@ -10,11 +10,15 @@ var MyComponent = Vue.extend({
 		return {
 			texts: [],
 			error: false,
-			updated: false,
 			text: {
 				title: '',
 				content: ''
-			}
+			},
+			editedId: null,
+			textBeforeEdit: {
+				title: '',
+				content: ''
+			},
 		};
 	},
 
@@ -35,33 +39,39 @@ var MyComponent = Vue.extend({
 
 		store: function() {
 			this.$http.post('/api/texts', this.text).then(function(response) {
-				if (response.status == 200) {
-					this.texts.push(response.json());
-					this.text = { 
-						title: '', 
-						content: ''
-					};
-				}
-			}, function(response) {
-				console.log("dafuq");
+				this.texts.push(response.json());
+				this.text = { 
+					title: '', 
+					content: ''
+				};
 			});
 		},
 
+		edit: function(item) {
+			this.textBeforeEdit.title = item.title;
+			this.textBeforeEdit.content = item.content;
+			this.editedId = item.id;
+		},
+
 		update: function(item) {
+			this.editedId = null;
 			this.$http.put('/api/texts/' + item.id, item).then(function(response) {
-				if (response.status == 200) {
-					this.updated = true;
-				}
+				// sucess
+			}, function(response) {
+				item.title = this.textBeforeEdit.title;
+				item.content = this.textBeforeEdit.content;
 			});
 		},
 
 		destroy: function(item) {
 			this.$http.delete('/api/texts/' + item.id).then(function(response) {
-				if (response.status == 200) {
-					index = this.texts.indexOf(item);
-					this.texts.splice(index, 1);
-				}
+				index = this.texts.indexOf(item);
+				this.texts.splice(index, 1);
 			});
+		},
+
+		isEditing: function(item) {
+			return (item.id === this.editedId);
 		}
 	}
 });
