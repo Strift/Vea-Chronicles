@@ -10,12 +10,26 @@ var MyComponent = Vue.extend({
 		return {
 			texts: [],
 			error: false,
-			updated: false,
 			text: {
 				title: '',
 				content: ''
-			}
+			},
+			validationErrors: {
+				title: '',
+				content: ''
+			},
+			editedId: null,
+			textBeforeEdit: {
+				title: '',
+				content: ''
+			},
 		};
+	},
+
+	computed: {
+		editing: function() {
+			return (this.editedId !== null);
+		}
 	},
 
 	ready: function() {
@@ -35,33 +49,53 @@ var MyComponent = Vue.extend({
 
 		store: function() {
 			this.$http.post('/api/texts', this.text).then(function(response) {
-				if (response.status == 200) {
-					this.texts.push(response.json());
-					this.text = { 
-						title: '', 
-						content: ''
-					};
-				}
+				this.texts.push(response.json());
+				this.text = { 
+					title: '', 
+					content: ''
+				};
+				this.validationErrors = {title: '', content: ''};
 			}, function(response) {
-				console.log("dafuq");
+				if (response.status == 422) {
+					content = response.json();
+					this.validationErrors.title = content.title;
+					this.validationErrors.content = content.content;
+				}
 			});
+		},
+
+		edit: function(item) {
+			this.textBeforeEdit.title = item.title;
+			this.textBeforeEdit.content = item.content;
+			this.editedId = item.id;
 		},
 
 		update: function(item) {
 			this.$http.put('/api/texts/' + item.id, item).then(function(response) {
-				if (response.status == 200) {
-					this.updated = true;
+				this.editedId = null;
+				this.validationErrors = {title: '', content: ''};
+			}, function(response) {
+				if (response.status == 422) {
+					content = response.json();
+					this.validationErrors.title = content.title;
+					this.validationErrors.content = content.content;
+				} else {
+					item.title = this.textBeforeEdit.title;
+					item.content = this.textBeforeEdit.content;
+					this.editedId = null;
 				}
 			});
 		},
 
 		destroy: function(item) {
 			this.$http.delete('/api/texts/' + item.id).then(function(response) {
-				if (response.status == 200) {
-					index = this.texts.indexOf(item);
-					this.texts.splice(index, 1);
-				}
+				index = this.texts.indexOf(item);
+				this.texts.splice(index, 1);
 			});
+		},
+
+		isEditing: function(item) {
+			return (item.id === this.editedId);
 		}
 	}
 });

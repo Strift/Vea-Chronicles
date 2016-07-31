@@ -5,7 +5,7 @@
         <meta id="token" name="token" value="{{ csrf_token() }}">
         <title>Vea Chronicles</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-        <link rel="stylesheet" href="{{ asset('css/keywords.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ asset('css/backoffice.css') }}" type="text/css">
     </head>
 
     <body>

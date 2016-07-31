@@ -17,8 +17,8 @@ class TextController extends Controller
     {
         try
         {
-            $texts = \App\Text::all();
-            return $texts->except(['content'])->toJson();
+            $texts = \App\Text::with('keywords')->get();
+            return $texts->toJson();
         }
         catch (Exception $e)
         {
@@ -36,6 +36,10 @@ class TextController extends Controller
     {
         try
         {
+            $this->validate($request, [
+                "title" => 'required|unique:texts|max:255',
+                "content" => 'required',
+                ]);
             return \App\Text::create($request->all());
         }
         catch (Exception $e)
@@ -54,11 +58,12 @@ class TextController extends Controller
     {
         try
         {
-            $text = \App\Text::find($id);
+            $text = \App\Text::with('keywords')->find($id);
             if (!is_null($text))
             {
                 return $text->toJson();
             }
+            return response()->json("{}", 500);
         }
         catch (Exception $e)
         {
@@ -77,10 +82,17 @@ class TextController extends Controller
     {
         try
         {
-            $text = \App\Text::find($id);
-            $text->content = $request->content;
-            $text->save();
-            return$text->toJson();
+            $this->validate($request, [
+                "title" => 'required|unique:texts,title,'.$id.',id|max:255',
+                "content" => 'required',
+                ]);
+            $text = \App\Text::with('keywords')->find($id);
+            if (!is_null($text))
+            {
+                $text->update($request->all());
+                return $text->toJson();
+            }
+            return response()->json("{}", 500);
         } 
         catch(Exception $e) 
         {
@@ -106,4 +118,10 @@ class TextController extends Controller
             return response()->json("{}", 500);
         }
     }
+
+    /*public function attachKeyword(Request $request)
+    {
+
+    }*/
+
 }

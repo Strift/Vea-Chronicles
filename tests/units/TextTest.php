@@ -6,13 +6,20 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class TextTest extends TestCase
 {
+    use DatabaseMigrations;
 
-	use DatabaseMigrations;
-
-    public function testGeneratesPreviewOnCreation()
+    public function testKasKeywords()
     {
-        $text = factory(App\Text::class)->create([]);
-        $this->assertTrue($text->preview != null);
+    	$text = factory(App\Text::class)->create([]);
+    	$this->assertNotEquals($text->keywords, null);
     }
-    
+
+    public function testAttachKeyword()
+    {
+    	$text = factory(App\Text::class)->create([]);
+    	$keyword = factory(App\Keyword::class)->create(["word" => "Vea"]);
+    	$text->attachKeyword($keyword);
+    	$this->seeInDatabase('keyword_text', ["keyword_id" => $keyword->id, "text_id" => $text->id]);
+    }
+
 }

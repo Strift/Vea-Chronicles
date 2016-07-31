@@ -8,5 +8,15 @@ class Text extends Model
 {
     protected $fillable = ["title", "content"];
 
-    protected $visible = ["title", "content", "preview", "id"];
+    protected $visible = [ "id", "title", "content", "keywords"];
+
+    public function keywords()
+    {
+    	return $this->belongsToMany(Keyword::class);
+    }
+
+    public function attachKeyword(Keyword $word)
+    {
+    	$this->keywords()->attach($word->id);
+    }
 }

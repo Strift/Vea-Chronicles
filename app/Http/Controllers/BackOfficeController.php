@@ -15,11 +15,6 @@ class BackOfficeController extends Controller
 
     public function texts()
     {
-    	return view('text.index');
-    }
-
-    public function editText($id)
-    {
-    	return view('text.edit');
+    	return view('texts');
     }
 }
