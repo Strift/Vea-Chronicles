@@ -50,7 +50,7 @@
                         @{{ item.content.substring(0, 200) }}...
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>

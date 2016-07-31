@@ -17,7 +17,7 @@ class TextController extends Controller
     {
         try
         {
-            $texts = \App\Text::get();
+            $texts = \App\Text::with('keywords')->get();
             return $texts->toJson();
         }
         catch (Exception $e)
@@ -54,7 +54,7 @@ class TextController extends Controller
     {
         try
         {
-            $text = \App\Text::find($id);
+            $text = \App\Text::with('keywords')->find($id);
             if (!is_null($text))
             {
                 return $text->toJson();
