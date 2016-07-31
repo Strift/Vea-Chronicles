@@ -17,9 +17,11 @@
                 <div class="col-xs-10">
                     <div class="form-group">
                         <input v-model="text.title" type="text" placeholder="Titre" class="form-control"/>
+                        <span class="validation-error">@{{ validationErrors.title }}</span>
                     </div>
                     <div class="form-group">
                         <textarea v-model="text.content" class="form-control" rows="2" placeholder="Contenu"></textarea>
+                        <span class="validation-error">@{{ validationErrors.content }}</span>
                     </div>
                 </div> 
                 <button v-on:click.prevent="store()" type="submit" class="btn btn-sm btn-success pull-right col-xs-2">Créer</button>
@@ -40,7 +42,7 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div v-if="isEditing(item)">
+                    <div v-if="isEditing(item)" transition="expand" >
                         <div class="form-group">
                             <textarea v-model="item.content" class="form-control"></textarea>
                         </div>

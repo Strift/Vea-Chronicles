@@ -36,6 +36,10 @@ class TextController extends Controller
     {
         try
         {
+            $this->validate($request, [
+                "title" => 'required|unique:texts|max:255',
+                "content" => 'required',
+                ]);
             return \App\Text::create($request->all());
         }
         catch (Exception $e)
@@ -59,6 +63,7 @@ class TextController extends Controller
             {
                 return $text->toJson();
             }
+            return response()->json("{}", 500);
         }
         catch (Exception $e)
         {
@@ -77,9 +82,17 @@ class TextController extends Controller
     {
         try
         {
+            $this->validate($request, [
+                "title" => 'required|unique:texts|max:255',
+                "content" => 'required',
+                ]);
             $text = \App\Text::find($id);
-            $text->update($request->all());
-            return$text->toJson();
+            if (!is_null($text))
+            {
+                $text->update($request->all());
+                return$text->toJson();
+            }
+            return response()->json("{}", 500);
         } 
         catch(Exception $e) 
         {
@@ -105,5 +118,10 @@ class TextController extends Controller
             return response()->json("{}", 500);
         }
     }
+
+    /*public function attachKeyword(Request $request)
+    {
+
+    }*/
 
 }

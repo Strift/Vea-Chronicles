@@ -14,6 +14,10 @@ var MyComponent = Vue.extend({
 				title: '',
 				content: ''
 			},
+			validationErrors: {
+				title: '',
+				content: ''
+			},
 			editedId: null,
 			textBeforeEdit: {
 				title: '',
@@ -44,6 +48,13 @@ var MyComponent = Vue.extend({
 					title: '', 
 					content: ''
 				};
+				this.validationErrors = {title: '', content: ''};
+			}, function(response) {
+				if (response.status == 422) {
+					content = response.json();
+					this.validationErrors.title = content.title;
+					this.validationErrors.content = content.content;
+				}	
 			});
 		},
 
