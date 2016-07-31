@@ -31,7 +31,7 @@
                 <div class="panel-heading">
                     @{{ item.title }}
                     <div class="pull-right">
-                        {{-- <a href="{{ action('BackOfficeController@editText') }}">Modifier</a> --}}
+                        <a href="texts/edit/@{{item.id}}">Modifier</a>
                         <button v-on:click.prevent="destroy(item)" type="submit" class="btn btn-xs btn-danger ">Supprimer</button>
                     </div>
                 </div>

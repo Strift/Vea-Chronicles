@@ -17,8 +17,9 @@ Route::get('/', function () {
 
 // Back-office
 
-Route::get('/keywords', 'BackOfficeController@keywords');
+Route::get('keywords', 'BackOfficeController@keywords');
 Route::get('texts', 'BackOfficeController@texts');
+Route::get('texts/edit/{id}', 'BackOfficeController@editText');
 
 // API
 
