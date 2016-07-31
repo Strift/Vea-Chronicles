@@ -14,4 +14,9 @@ class Text extends Model
     {
     	return $this->belongsToMany(Keyword::class);
     }
+
+    public function attachKeyword(Keyword $word)
+    {
+    	$this->keywords()->attach($word->id);
+    }
 }
