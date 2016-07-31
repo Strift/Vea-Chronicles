@@ -41,10 +41,10 @@ class KeywordAPITest extends TestCase
     public function testUpdate()
     {
     	$keyword = factory(App\Keyword::class)->create(["word" => "keyword2"]);
-    	$this->put('api/keywords/' . $keyword->id, ["description" => "The Description"])
-    		->seeJsonStructure([
-    			"word", "description", "id"
-    			]);
+    	$this->put('api/keywords/' . $keyword->id, ["word" => "keyword2", "description" => "The Description"])
+            ->seeJson([
+                "word" => "keyword2", "description" => "The Description"
+                ]);
 		$this->seeInDatabase('keywords', ["word" => "keyword2", "description" => "The Description"]);
     }
 

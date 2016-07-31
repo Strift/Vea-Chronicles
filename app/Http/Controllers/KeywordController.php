@@ -36,6 +36,9 @@ class KeywordController extends Controller
     {
         try
         {
+            $this->validate($request, [
+                "word" => 'required|unique:keywords|max:255'
+                ]);
             return \App\Keyword::create($request->all());
         }
         catch (Exception $e)
@@ -77,10 +80,17 @@ class KeywordController extends Controller
     {
         try
         {
+            $this->validate($request, [
+                "word" => 'required|unique:keywords,word,'.$id.',id|max:255',
+                "description" => 'required',
+                ]);
             $keyword = \App\Keyword::find($id);
-            $keyword->description = $request->description;
-            $keyword->save();
-            return $keyword->toJson();
+            if (!is_null($keyword))
+            {
+                $keyword->update($request->all());
+                return $keyword->toJson();
+            }
+            return response()->json("{}", 500);
         } 
         catch(Exception $e) 
         {

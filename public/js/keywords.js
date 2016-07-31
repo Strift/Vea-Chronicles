@@ -7,11 +7,16 @@ vm = new Vue({
 	data: {
 		keywords: [],
 		error: false,
-		updated: false,
 		keyword: {
 			word: '',
 			description: ''
-		}
+		},
+		validationErrors: {
+			word: '',
+			creationDescription: '',
+			updateDescription: ''
+		},
+		editedId: null
 	},
 
 	ready: function() {
@@ -31,20 +36,31 @@ vm = new Vue({
 
 		store: function() {
 			this.$http.post('/api/keywords', this.keyword).then(function(response) {
-				if (response.status == 200) {
-					this.keywords.push(response.json());
-					this.keyword = { 
-						word: '', 
-						description: ''
-					};
+				this.keywords.push(response.json());
+				this.keyword = { 
+					word: '', 
+					description: ''
+				};
+				this.validationErrors = {word: '', description: ''};
+			}, function(response) {
+				if (response.status == 422) {
+					content = response.json();
+					this.validationErrors.word = content.word;
+					this.validationErrors.creationDescription = content.description;
 				}
 			});
 		},
 
 		update: function(item) {
+			this.editedId = item.id;
 			this.$http.put('/api/keywords/' + item.id, item).then(function(response) {
-				if (response.status == 200) {
-					this.updated = true;
+				this.validationErrors.updateDescription = '';
+				this.editedId = null;
+			}, function(response) {
+				if (response.status == 422) {
+					content = response.json();
+					this.validationErrors.updateDescription = content.description;
+					console.log(this.validationErrors.updateDescription)
 				}
 			});
 		},
@@ -56,6 +72,10 @@ vm = new Vue({
 					this.keywords.splice(index, 1);
 				}
 			});
+		},
+
+		isEditing: function(item) {
+			return (item.id === this.editedId);
 		}
 	}
 });
