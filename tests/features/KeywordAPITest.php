@@ -22,11 +22,11 @@ class KeywordAPITest extends TestCase
 
 	public function testStore()
 	{
-		$this->post('api/keywords', ["word" => "TheKeyword", "description" => "The Description"])
+		$this->post('api/keywords', ["word" => "word1", "description" => "The Description"])
 			->seeJson([
-				"word" => "TheKeyword", "description" => "The Description"
+				"word" => "word1", "description" => "The Description"
 				]);
-		$this->seeInDatabase('keywords', ["word" => "TheKeyword", "description" => "The Description"]);
+		$this->seeInDatabase('keywords', ["word" => "word1", "description" => "The Description"]);
 	}
 
     public function testShow()
@@ -40,12 +40,12 @@ class KeywordAPITest extends TestCase
 
     public function testUpdate()
     {
-    	$keyword = factory(App\Keyword::class)->create(["word" => "TheKeyword"]);
+    	$keyword = factory(App\Keyword::class)->create(["word" => "keyword2"]);
     	$this->put('api/keywords/' . $keyword->id, ["description" => "The Description"])
     		->seeJsonStructure([
     			"word", "description", "id"
     			]);
-		$this->seeInDatabase('keywords', ["word" => "TheKeyword", "description" => "The Description"]);
+		$this->seeInDatabase('keywords', ["word" => "keyword2", "description" => "The Description"]);
     }
 
     public function testDestroy()

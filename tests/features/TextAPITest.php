@@ -15,7 +15,7 @@ class TextAPITest extends TestCase
 		$this->get('api/texts/')
 			->seeJsonStructure([
 				"*" => [
-				"title", "content", "id"
+				"id", "title", "content"
 				]
 			]);
 	}
@@ -34,18 +34,18 @@ class TextAPITest extends TestCase
         $text = factory(App\Text::class)->create([]);
         $this->get('api/texts/' . $text->id)
             ->seeJsonStructure([
-                "title", "content", "id"
+                "id", "title", "content"
                 ]);
     }
 
     public function testUpdate()
     {
-        $text = factory(App\Text::class)->create(["title" => "TheKeyword"]);
+        $text = factory(App\Text::class)->create(["title" => "TheTitle"]);
         $this->put('api/texts/' . $text->id, ["content" => "The content"])
             ->seeJsonStructure([
                 "title", "content", "id"
                 ]);
-        $this->seeInDatabase('texts', ["title" => "TheKeyword", "content" => "The content"]);
+        $this->seeInDatabase('texts', ["title" => "TheTitle", "content" => "The content"]);
     }
 
     public function testDestroy()

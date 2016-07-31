@@ -8,5 +8,9 @@ class Text extends Model
 {
     protected $fillable = ["title", "content"];
 
-    protected $visible = ["title", "content", "preview", "id"];
+    protected $visible = [ "id", "title", "content", "preview", "keywords"];
+
+    public function keywords()
+    {
+    }
 }
