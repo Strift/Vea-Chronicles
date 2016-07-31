@@ -78,8 +78,7 @@ class TextController extends Controller
         try
         {
             $text = \App\Text::find($id);
-            $text->content = $request->content;
-            $text->save();
+            $text->update($request->all());
             return$text->toJson();
         } 
         catch(Exception $e) 
@@ -106,4 +105,5 @@ class TextController extends Controller
             return response()->json("{}", 500);
         }
     }
+
 }

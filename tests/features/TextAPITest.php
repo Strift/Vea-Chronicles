@@ -15,7 +15,7 @@ class TextAPITest extends TestCase
 		$this->get('api/texts/')
 			->seeJsonStructure([
 				"*" => [
-				"id", "title", "content"
+				"id", "title", "content", "keywords"
 				]
 			]);
 	}
@@ -34,7 +34,7 @@ class TextAPITest extends TestCase
         $text = factory(App\Text::class)->create([]);
         $this->get('api/texts/' . $text->id)
             ->seeJsonStructure([
-                "id", "title", "content"
+                "id", "title", "content", "keywords"
                 ]);
     }
 
